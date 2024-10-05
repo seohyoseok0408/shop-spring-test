@@ -17,12 +17,8 @@ public class AddressService implements MService<Integer, Address> {
         this.dao = dao;
     }
 
-    public AddressService() {
-        try {
-            cp = ConnectionPool.create();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void setCp(ConnectionPool cp) {
+        this.cp = cp;
     }
 
     @Override

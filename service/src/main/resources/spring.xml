@@ -3,9 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <bean id="addressDao" class="edu.sm.dao.AddressDao"/>
+    <bean id="connectionPool" class="edu.sm.frame.ConnectionPool" factory-method="create"/>
 
+    <bean id="addressDao" class="edu.sm.dao.AddressDao"/>
     <bean id="addressService" class="edu.sm.service.AddressService">
         <property name="dao" ref="addressDao"/>
+        <property name="cp" ref="connectionPool"/>
     </bean>
+
 </beans>
