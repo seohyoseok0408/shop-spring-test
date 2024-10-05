@@ -1,13 +1,16 @@
 package pay;
 
 import edu.sm.dto.Pay;
+import edu.sm.service.OrderDetailService;
 import edu.sm.service.PayService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class PayInsert {
     public static void main(String[] args) {
-        PayService payService = new PayService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        PayService payService = context.getBean("payService", PayService.class);
 
-        // 결제 정보 생성
         Pay pay = Pay.builder()
                 .oid(21) // 주문 ID
                 .payPrice(100000)

@@ -33,12 +33,22 @@ public class PayDao implements Dao<Integer, Pay> {
 
     @Override
     public Pay update(Pay pay, Connection conn) throws Exception {
-        throw new UnsupportedOperationException("Pay records cannot be updated.");
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
     }
 
     @Override
     public boolean delete(Integer id, Connection conn) throws Exception {
-        throw new UnsupportedOperationException("Pay records cannot be deleted.");
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
+    }
+
+    @Override
+    public Pay select(Integer payId, Connection conn) throws Exception {
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
+    }
+
+    @Override
+    public List<Pay> select(Connection conn) throws Exception {
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
     }
 
     // 특정 주문 ID(oid)에 대한 결제 정보 조회
@@ -69,15 +79,4 @@ public class PayDao implements Dao<Integer, Pay> {
         }
         return pay;
     }
-
-    @Override
-    public Pay select(Integer payId, Connection conn) throws Exception {
-        return null;
-    }
-
-    @Override
-    public List<Pay> select(Connection conn) throws Exception {
-        return null;
-    }
-
 }

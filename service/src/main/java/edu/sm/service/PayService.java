@@ -13,13 +13,12 @@ public class PayService implements MService<Integer, Pay> {
     PayDao dao;
     ConnectionPool cp;
 
-    public PayService() {
-        dao = new PayDao();
-        try {
-            cp = ConnectionPool.create();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void setDao(PayDao dao) {
+        this.dao = dao;
+    }
+
+    public void setCp(ConnectionPool cp) {
+        this.cp = cp;
     }
 
     @Override
@@ -29,7 +28,7 @@ public class PayService implements MService<Integer, Pay> {
             conn.setAutoCommit(false);
             dao.insert(pay, conn);
             conn.commit();
-            System.out.println("Pay record inserted successfully.");
+            System.out.println("결제 추가됨");
         } catch (Exception e) {
             conn.rollback();
             throw e;
@@ -41,27 +40,24 @@ public class PayService implements MService<Integer, Pay> {
 
     @Override
     public Pay modify(Pay pay) throws Exception {
-        throw new UnsupportedOperationException("Pay records cannot be updated.");
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
     }
 
     @Override
     public Boolean remove(Integer id) throws Exception {
-        throw new UnsupportedOperationException("Pay records cannot be deleted.");
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
     }
 
     @Override
     public Pay get(Integer payId) throws Exception {
-        Connection conn = cp.getConnection();
-        Pay pay = null;
-        try {
-            pay = dao.select(payId, conn);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return pay;
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
     }
+
+    @Override
+    public List<Pay> get() throws Exception {
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
+    }
+
     // 특정 주문 ID로 결제 정보 조회
     public Pay getByOrderId(int oid) throws Exception {
         Connection conn = cp.getConnection();
@@ -74,19 +70,5 @@ public class PayService implements MService<Integer, Pay> {
             cp.releaseConnection(conn);
         }
         return pay;
-    }
-
-    @Override
-    public List<Pay> get() throws Exception {
-        Connection conn = cp.getConnection();
-        List<Pay> pays = null;
-        try {
-            pays = dao.select(conn);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return pays;
     }
 }

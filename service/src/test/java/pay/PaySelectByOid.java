@@ -2,10 +2,14 @@ package pay;
 
 import edu.sm.dto.Pay;
 import edu.sm.service.PayService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class PaySelectByOid {
     public static void main(String[] args) {
-        PayService payService = new PayService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        PayService payService = context.getBean("payService", PayService.class);
+
         int orderId = 11; // 조회할 주문 ID
 
         try {
