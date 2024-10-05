@@ -14,13 +14,12 @@ public class OrderService implements MService<Integer, Order> {
     OrderDao dao;
     ConnectionPool cp;
 
-    public OrderService() {
-        dao = new OrderDao();
-        try {
-            cp = ConnectionPool.create();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void setDao(OrderDao dao) {
+        this.dao = dao;
+    }
+
+    public void setCp(ConnectionPool cp) {
+        this.cp = cp;
     }
 
     @Override
@@ -69,7 +68,6 @@ public class OrderService implements MService<Integer, Order> {
     public List<Order> get() throws Exception {
         throw new UnsupportedOperationException("Service에서 주문 전체 목록을 조회할 수 없습니다.");
     }
-
 
     // 특정 고객의 주문 목록을 조회하는 메서드
     public List<Order> getByCustomerId(int cid) throws Exception {

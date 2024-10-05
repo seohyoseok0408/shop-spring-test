@@ -81,7 +81,7 @@ public class OrderDao implements Dao<Integer, Order> {
 
     @Override
     public List<Order> select(Connection conn) throws Exception {
-        return null;
+        throw new UnsupportedOperationException("Service에서 주문 전체 목록을 조회할 수 없습니다.");
     }
 
     // 주문 상태 업데이트 메서드

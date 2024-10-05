@@ -2,10 +2,14 @@ package order;
 
 import edu.sm.dto.Order;
 import edu.sm.service.OrderService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class OrderInsert {
     public static void main(String[] args) {
-        OrderService orderService = new OrderService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        OrderService orderService = context.getBean("orderService", OrderService.class);
+
         try {
             Order order = Order.builder()
                     .cid(2)

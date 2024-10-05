@@ -1,10 +1,14 @@
 package order;
 
 import edu.sm.service.OrderService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class OrderUpdateStatus {
     public static void main(String[] args) {
-        OrderService orderService = new OrderService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        OrderService orderService = context.getBean("orderService", OrderService.class);
+
         int orderId = 1; // 업데이트할 주문 번호
         String newStatus = "배송 중"; // 변경할 상태
 
