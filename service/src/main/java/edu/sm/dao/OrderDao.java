@@ -38,12 +38,12 @@ public class OrderDao implements Dao<Integer, Order> {
 
     @Override
     public Order update(Order order, Connection conn) throws Exception {
-        throw new UnsupportedOperationException("주문 삭제 후 다시 주문 부탁드립니다.");
+        throw new UnsupportedOperationException("주문은 삭제가 불가하기에 취소 후 다시 주문해주세요.");
     }
 
     @Override
     public boolean delete(Integer oid, Connection conn) throws Exception {
-        throw new UnsupportedOperationException("주문은 삭제할 수 없습니다.");
+        throw new UnsupportedOperationException("Service에서 주문 삭제를 할 수 없습니다.");
     }
 
     @Override
@@ -81,11 +81,6 @@ public class OrderDao implements Dao<Integer, Order> {
 
     @Override
     public List<Order> select(Connection conn) throws Exception {
-        return null;
-    }
-
-    // 주문 상태별 조회 메서드
-    public List<Order> selectOrdersByStatus(String status, Connection conn) throws Exception {
         return null;
     }
 

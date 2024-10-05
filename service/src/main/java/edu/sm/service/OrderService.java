@@ -42,12 +42,12 @@ public class OrderService implements MService<Integer, Order> {
 
     @Override
     public Order modify(Order order) throws Exception {
-        throw new UnsupportedOperationException("주문 삭제 후 다시  주문부탁");
+        throw new UnsupportedOperationException("주문은 삭제가 불가하기에 취소 후 다시 주문해주세요.");
     }
 
     @Override
     public Boolean remove(Integer oid) throws Exception {
-        throw new UnsupportedOperationException("주문은 삭제할 수 없습니다.");
+        throw new UnsupportedOperationException("Service에서 주문 삭제를 할 수 없습니다.");
     }
 
     @Override
@@ -67,17 +67,7 @@ public class OrderService implements MService<Integer, Order> {
 
     @Override
     public List<Order> get() throws Exception {
-        Connection conn = cp.getConnection();
-        List<Order> orders = null;
-        try {
-            orders = dao.select(conn);
-            System.out.println("OrderService get() 함수 실행됨");
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return orders;
+        throw new UnsupportedOperationException("Service에서 주문 전체 목록을 조회할 수 없습니다.");
     }
 
 
@@ -93,5 +83,20 @@ public class OrderService implements MService<Integer, Order> {
             cp.releaseConnection(conn);
         }
         return orders;
+    }
+
+    public void changeOrderStatus(int oid, String status) throws Exception {
+        Connection conn = cp.getConnection();
+        try {
+            conn.setAutoCommit(false); // 트랜잭션 시작
+            dao.updateOrderStatus(oid, status, conn); // 상태 업데이트
+            conn.commit(); // 커밋
+            System.out.println("주문 상태가 " + status + "로 변경되었습니다.");
+        } catch (Exception e) {
+            conn.rollback(); // 오류 발생 시 롤백
+            throw e;
+        } finally {
+            cp.releaseConnection(conn);
+        }
     }
 }
