@@ -2,12 +2,15 @@ package address;
 
 import edu.sm.dto.Address;
 import edu.sm.service.AddressService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
 public class AddressSelectByCid {
     public static void main(String[] args) {
-        AddressService addressService = new AddressService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        AddressService addressService = context.getBean("addressService", AddressService.class);
 
         int customerId = 1;  // 조회할 고객 ID
 

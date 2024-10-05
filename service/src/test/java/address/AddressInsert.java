@@ -2,11 +2,13 @@ package address;
 
 import edu.sm.dto.Address;
 import edu.sm.service.AddressService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class AddressInsert {
     public static void main(String[] args) {
-        AddressService addressService = new AddressService();
-
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        AddressService addressService = context.getBean("addressService", AddressService.class);
         // 테스트용 주소 데이터 생성
         Address newAddress = Address.builder()
                 .cid(1) // 고객 ID

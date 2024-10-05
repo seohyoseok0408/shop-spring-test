@@ -2,13 +2,16 @@ package address;
 
 import edu.sm.dto.Address;
 import edu.sm.service.AddressService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class AddressUpdate {
     public static void main(String[] args) {
-        AddressService addressService = new AddressService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        AddressService addressService = context.getBean("addressService", AddressService.class);
 
         Address updatedAddress = Address.builder()
-                .aid(1) // 수정할 주소의 ID
+                .aid(22) // 수정할 주소의 ID
                 .aname("이태빈") // 수정된 이름
                 .address("아산시 탕정면")
                 .addressDetail("빌라 303호")

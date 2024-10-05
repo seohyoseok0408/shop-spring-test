@@ -1,12 +1,14 @@
 package address;
 
 import edu.sm.service.AddressService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class AddressDelete {
     public static void main(String[] args) {
-        AddressService addressService = new AddressService();
-
-        int addressId = 1; // 삭제할 주소 ID
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        AddressService addressService = context.getBean("addressService", AddressService.class);
+        int addressId = 3; // 삭제할 주소 ID
 
         try {
             boolean result = addressService.remove(addressId);

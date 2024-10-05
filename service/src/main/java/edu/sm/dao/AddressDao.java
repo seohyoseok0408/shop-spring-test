@@ -100,30 +100,7 @@ public class AddressDao implements Dao<Integer, Address> {
 
     @Override
     public List<Address> select(Connection conn) throws Exception {
-        List<Address> addresses = new ArrayList<>();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            ps = conn.prepareStatement(Sql.SELECT_ALL_ADDRESSES);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                addresses.add(new Address(
-                        rs.getInt("aid"),
-                        rs.getInt("cid"),
-                        rs.getString("aname"),
-                        rs.getString("address"),
-                        rs.getString("address_detail"),
-                        rs.getString("zip_code"),
-                        rs.getString("phone")
-                ));
-            }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (ps != null) ps.close();
-            if (rs != null) rs.close();
-        }
-        return addresses;
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
     }
 
     // 특정 고객의 주소 목록을 조회하는 메서드

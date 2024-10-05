@@ -13,8 +13,11 @@ public class AddressService implements MService<Integer, Address> {
     AddressDao dao;
     ConnectionPool cp;
 
+    public void setDao(AddressDao dao) {
+        this.dao = dao;
+    }
+
     public AddressService() {
-        dao = new AddressDao();
         try {
             cp = ConnectionPool.create();
         } catch (SQLException e) {
@@ -84,16 +87,8 @@ public class AddressService implements MService<Integer, Address> {
 
     @Override
     public List<Address> get() throws Exception {
-        Connection conn = cp.getConnection();
-        List<Address> addresses = null;
-        try {
-            addresses = dao.select(conn);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return addresses;
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
+
     }
 
     // 특정 고객의 주소 목록을 조회하는 메서드
