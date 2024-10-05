@@ -10,17 +10,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class OrderDetailService implements MService<Integer, OrderDetail> {
-
     OrderDetailDao dao;
     ConnectionPool cp;
 
-    public OrderDetailService() {
-        dao = new OrderDetailDao();
-        try {
-            cp = ConnectionPool.create();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void setDao(OrderDetailDao dao) {
+        this.dao = dao;
+    }
+
+    public void setCp(ConnectionPool cp) {
+        this.cp = cp;
     }
 
     @Override
@@ -42,42 +40,22 @@ public class OrderDetailService implements MService<Integer, OrderDetail> {
 
     @Override
     public OrderDetail modify(OrderDetail orderDetail) throws Exception {
-        // OrderDetail은 수정이 불가능하다는 예외 처리
-        throw new UnsupportedOperationException("Order details cannot be modified.");
+        throw new UnsupportedOperationException("OrderDetail은 수정이 불가합니다.");
     }
 
     @Override
     public Boolean remove(Integer orderDetailId) throws Exception {
-        // OrderDetail은 삭제가 불가능하다는 예외 처리
-        throw new UnsupportedOperationException("Order details cannot be deleted.");
+        throw new UnsupportedOperationException("OrderDetail은 수정이 불가합니다.");
     }
 
     @Override
     public OrderDetail get(Integer id) throws Exception {
-        Connection conn = cp.getConnection();
-        OrderDetail orderDetail = null;
-        try {
-            orderDetail = dao.select(id, conn);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return orderDetail;
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
     }
 
     @Override
     public List<OrderDetail> get() throws Exception {
-        Connection conn = cp.getConnection();
-        List<OrderDetail> orderDetails = null;
-        try {
-            orderDetails = dao.select(conn);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return orderDetails;
+        throw new UnsupportedOperationException("Service에서 지원하지 않는 기능입니다.");
     }
 
     // 특정 주문에 대한 주문 상세 목록을 조회하는 메서드

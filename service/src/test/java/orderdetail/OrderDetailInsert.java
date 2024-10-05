@@ -2,10 +2,14 @@ package orderdetail;
 
 import edu.sm.dto.OrderDetail;
 import edu.sm.service.OrderDetailService;
+import edu.sm.service.OrderService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class OrderDetailInsert {
     public static void main(String[] args) {
-        OrderDetailService orderDetailService = new OrderDetailService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        OrderDetailService orderDetailService = context.getBean("orderDetailService", OrderDetailService.class);
 
         OrderDetail newOrderDetail = OrderDetail.builder()
                 .pid(5)        // 상품 ID

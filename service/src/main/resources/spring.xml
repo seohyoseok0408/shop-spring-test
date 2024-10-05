@@ -40,4 +40,10 @@
         <property name="dao" ref="orderDao"/>
         <property name="cp" ref="connectionPool"/>
     </bean>
+
+    <bean id="orderDetailDao" class="edu.sm.dao.OrderDetailDao"/>
+    <bean id="orderDetailService" class="edu.sm.service.OrderDetailService">
+        <property name="dao" ref="orderDetailDao"/>
+        <property name="cp" ref="connectionPool"/>
+    </bean>
 </beans>

@@ -2,12 +2,16 @@ package orderdetail;
 
 import edu.sm.dto.OrderDetail;
 import edu.sm.service.OrderDetailService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
 public class OrderDetailSelectByOid {
     public static void main(String[] args) {
-        OrderDetailService orderDetailService = new OrderDetailService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        OrderDetailService orderDetailService = context.getBean("orderDetailService", OrderDetailService.class);
+
         int oid = 11;
 
         try {
