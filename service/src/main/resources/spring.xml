@@ -5,6 +5,12 @@
 
     <bean id="connectionPool" class="edu.sm.frame.ConnectionPool" factory-method="create"/>
 
+    <bean id="accessLogDao" class="edu.sm.dao.AccessLogDao"/>
+    <bean id="accessLogService" class="edu.sm.service.AccessLogService">
+        <property name="dao" ref="accessLogDao"/>
+        <property name="cp" ref="connectionPool"/>
+    </bean>
+
     <bean id="addressDao" class="edu.sm.dao.AddressDao"/>
     <bean id="addressService" class="edu.sm.service.AddressService">
         <property name="dao" ref="addressDao"/>
