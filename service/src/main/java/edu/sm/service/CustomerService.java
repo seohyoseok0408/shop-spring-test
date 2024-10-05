@@ -13,14 +13,14 @@ public class CustomerService implements MService<Integer, Customer> {
     CustomerDao dao;
     ConnectionPool cp;
 
-    public CustomerService() {
-        dao = new CustomerDao();
-        try {
-            cp = ConnectionPool.create();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void setDao(CustomerDao dao) {
+        this.dao = dao;
     }
+
+    public void setCp(ConnectionPool cp) {
+        this.cp = cp;
+    }
+
     @Override
     public Customer add(Customer customer) throws Exception {
         Connection conn = cp.getConnection();
@@ -35,7 +35,6 @@ public class CustomerService implements MService<Integer, Customer> {
         } finally {
             cp.releaseConnection(conn);
         }
-
         return customer;
     }
 
@@ -85,34 +84,9 @@ public class CustomerService implements MService<Integer, Customer> {
 
     @Override
     public List<Customer> get() throws Exception {
-        Connection conn = cp.getConnection();
-        List<Customer> customers = null;
-        try {
-            customers = dao.select(conn);
-            System.out.println("Customer Service get() 실행됨");
-
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return customers;
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
     }
 
-    // 사용자 이름으로 고객 검색
-    public List<Customer> getByName(String name) throws Exception {
-        Connection conn = cp.getConnection();
-        List<Customer> customers = null;
-        try {
-            customers = dao.selectByName(name, conn);
-            System.out.println("Customer Service getByName() 실행됨");
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return customers;
-    }
     // 로그인 함수: 이메일과 비밀번호를 체크하여 사용자를 반환
     public Customer login(String email, String pwd) throws Exception {
         Connection con = cp.getConnection();

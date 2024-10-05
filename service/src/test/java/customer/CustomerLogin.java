@@ -2,11 +2,15 @@ package customer;
 
 import edu.sm.dto.Customer;
 import edu.sm.service.CustomerService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class CustomerLogin {
     public static void main(String[] args) {
-        CustomerService customerService = new CustomerService();
-        String email = "ascc@naver.com"; // 테스트용 이메일
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        CustomerService customerService = context.getBean("customerService", CustomerService.class);
+
+        String email = "seo@naver.com"; // 테스트용 이메일
         String pwd = "1234"; // 테스트용 비밀번호
 
         try {

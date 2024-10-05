@@ -1,11 +1,16 @@
 package customer;
 
 import edu.sm.dto.Customer;
+import edu.sm.service.CategoryService;
 import edu.sm.service.CustomerService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class CustomerDelete {
     public static void main(String[] args) {
-        CustomerService customerService = new CustomerService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        CustomerService customerService = context.getBean("customerService", CustomerService.class);
+
         int id = 15;
         Customer cust = Customer.builder()
                 .cid(id)

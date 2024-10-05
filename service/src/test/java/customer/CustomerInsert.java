@@ -2,13 +2,16 @@ package customer;
 
 import edu.sm.dto.Customer;
 import edu.sm.service.CustomerService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.sql.Date;
 import java.time.LocalDate;
 
 public class CustomerInsert {
     public static void main(String[] args) {
-        CustomerService customerService = new CustomerService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        CustomerService customerService = context.getBean("customerService", CustomerService.class);
 
         // 생년월일을 올바르게 변환 (LocalDate 사용 후 Date로 변환)
         LocalDate birthDate = LocalDate.of(2001, 4, 8); // 2001년 4월 8일

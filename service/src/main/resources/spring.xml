@@ -23,4 +23,9 @@
         <property name="cp" ref="connectionPool"/>
     </bean>
 
+    <bean id="customerDao" class="edu.sm.dao.CustomerDao"/>
+    <bean id="customerService" class="edu.sm.service.CustomerService">
+        <property name="dao" ref="customerDao"/>
+        <property name="cp" ref="connectionPool"/>
+    </bean>
 </beans>

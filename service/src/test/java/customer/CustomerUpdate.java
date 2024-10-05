@@ -2,10 +2,14 @@ package customer;
 
 import edu.sm.dto.Customer;
 import edu.sm.service.CustomerService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class CustomerUpdate {
     public static void main(String[] args) {
-        CustomerService customerService = new CustomerService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        CustomerService customerService = context.getBean("customerService", CustomerService.class);
+
         int id = 20;
 
         // Customer 객체 생성
