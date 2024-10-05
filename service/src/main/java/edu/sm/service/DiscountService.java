@@ -13,56 +13,27 @@ public class DiscountService implements MService<Integer, Discount> {
     DiscountDao dao;
     ConnectionPool cp;
 
-    public DiscountService() {
-        dao = new DiscountDao();
-        try {
-            cp = ConnectionPool.create();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void setDao(DiscountDao dao) {
+        this.dao = dao;
+    }
+
+    public void setCp(ConnectionPool cp) {
+        this.cp = cp;
     }
 
     @Override
     public Discount add(Discount discount) throws Exception {
-        Connection conn = cp.getConnection();
-        try {
-            conn.setAutoCommit(false);
-            dao.insert(discount, conn);
-            conn.commit();
-        } catch (Exception e) {
-            conn.rollback();
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return discount;
+        throw new UnsupportedOperationException("Service에서 지원하지 않는 기능입니다.");
     }
 
     @Override
     public Discount modify(Discount discount) throws Exception {
-        Connection conn = cp.getConnection();
-        try {
-            dao.update(discount, conn);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return discount;
+        throw new UnsupportedOperationException("Service에서 지원하지 않는 기능입니다.");
     }
 
     @Override
     public Boolean remove(Integer disId) throws Exception {
-        Connection conn = cp.getConnection();
-        Boolean result = false;
-        try {
-            result = dao.delete(disId, conn);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return result;
+        throw new UnsupportedOperationException("Service에서 지원하지 않는 기능입니다.");
     }
 
     @Override
@@ -81,15 +52,6 @@ public class DiscountService implements MService<Integer, Discount> {
 
     @Override
     public List<Discount> get() throws Exception {
-        Connection conn = cp.getConnection();
-        List<Discount> discounts = null;
-        try {
-            discounts = dao.select(conn);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return discounts;
+        throw new UnsupportedOperationException("Service에서 지원하지 않는 기능입니다.");
     }
 }

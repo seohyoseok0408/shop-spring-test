@@ -1,11 +1,16 @@
 package discount;
 
 import edu.sm.dto.Discount;
+import edu.sm.service.CustomerService;
 import edu.sm.service.DiscountService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class DiscountSelect {
     public static void main(String[] args) {
-        DiscountService discountService = new DiscountService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        DiscountService discountService = context.getBean("discountService", DiscountService.class);
+
         int discountId = 2;  // 조회할 할인 ID
 
         try {

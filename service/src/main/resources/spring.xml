@@ -28,4 +28,10 @@
         <property name="dao" ref="customerDao"/>
         <property name="cp" ref="connectionPool"/>
     </bean>
+
+    <bean id="discountDao" class="edu.sm.dao.DiscountDao"/>
+    <bean id="discountService" class="edu.sm.service.DiscountService">
+        <property name="dao" ref="discountDao"/>
+        <property name="cp" ref="connectionPool"/>
+    </bean>
 </beans>
