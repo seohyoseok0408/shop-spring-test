@@ -2,12 +2,15 @@ package category;
 
 import edu.sm.dto.Category;
 import edu.sm.service.CategoryService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
 public class CategorySelectAll {
     public static void main(String[] args) {
-        CategoryService categoryService = new CategoryService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        CategoryService categoryService = context.getBean("categoryService", CategoryService.class);
 
         try {
             List<Category> categories = categoryService.get();  // 모든 카테고리 조회

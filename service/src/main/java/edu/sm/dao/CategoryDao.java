@@ -15,23 +15,22 @@ public class CategoryDao implements Dao<Integer, Category> {
 
     @Override
     public Category insert(Category category, Connection conn) throws Exception {
-        return null;
+        throw new UnsupportedOperationException("Service에서 카테고리 추가는 지원하지 않습니다.");
     }
 
     @Override
     public Category update(Category category, Connection conn) throws Exception {
-        return null;
+        throw new UnsupportedOperationException("Service에서 카테고리 수정은 지원하지 않습니다.");
     }
 
     @Override
     public boolean delete(Integer categoryId, Connection conn) throws Exception {
-       return false;
+        throw new UnsupportedOperationException("Service에서 카테고리 삭제는 지원하지 않습니다.");
     }
-
 
     @Override
     public Category select(Integer categoryId, Connection conn) throws Exception {
-        return null;
+        throw new UnsupportedOperationException("Service에서 카테고리 단일명 검색은 지원하지 않습니다.");
     }
 
     @Override

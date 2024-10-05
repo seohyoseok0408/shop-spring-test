@@ -13,67 +13,32 @@ public class CategoryService implements MService<Integer, Category> {
     CategoryDao dao;
     ConnectionPool cp;
 
+    public void setDao(CategoryDao dao) {
+        this.dao = dao;
+    }
+
+    public void setCp(ConnectionPool cp) {
+        this.cp = cp;
+    }
 
     @Override
     public Category add(Category category) throws Exception {
-        Connection conn = cp.getConnection();
-        try {
-            conn.setAutoCommit(false);
-            dao.insert(category, conn);
-            conn.commit();
-        } catch (Exception e) {
-            conn.rollback();
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return category;
+        throw new UnsupportedOperationException("Service에서 카테고리 추가는 지원하지 않습니다.");
     }
 
     @Override
     public Category modify(Category category) throws Exception {
-        Connection conn = cp.getConnection();
-        try {
-            dao.update(category, conn);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return category;
+        throw new UnsupportedOperationException("Service에서 카테고리 수정은 지원하지 않습니다.");
     }
 
     @Override
     public Boolean remove(Integer categoryId) throws Exception {
-        Connection conn = cp.getConnection();
-        Boolean result = false;
-        try {
-            result = dao.delete(categoryId, conn);
-            if (result) {
-                System.out.println("카테고리 삭제됨");
-            }
-        } catch (Exception e) {
-            System.err.println(e.getMessage()); // "해당 카테고리는 사용 중인 상품이 있어서 삭제할 수 없습니다." 메시지 출력
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return result;
+        throw new UnsupportedOperationException("Service에서 카테고리 삭제는 지원하지 않습니다.");
     }
-
 
     @Override
     public Category get(Integer categoryId) throws Exception {
-        Connection conn = cp.getConnection();
-        Category category = null;
-        try {
-            category = dao.select(categoryId, conn);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return category;
+        throw new UnsupportedOperationException("Service에서 카테고리 단일명 검색은 지원하지 않습니다.");
     }
 
     @Override

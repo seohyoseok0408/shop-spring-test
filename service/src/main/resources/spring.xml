@@ -17,4 +17,10 @@
         <property name="cp" ref="connectionPool"/>
     </bean>
 
+    <bean id="categoryDao" class="edu.sm.dao.CategoryDao"/>
+    <bean id="categoryService" class="edu.sm.service.CategoryService">
+        <property name="dao" ref="categoryDao"/>
+        <property name="cp" ref="connectionPool"/>
+    </bean>
+
 </beans>
