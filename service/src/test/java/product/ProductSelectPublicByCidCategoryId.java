@@ -2,12 +2,15 @@ package product;
 
 import edu.sm.dto.Product;
 import edu.sm.service.ProductService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
 public class ProductSelectPublicByCidCategoryId {
     public static void main(String[] args) {
-        ProductService productService = new ProductService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        ProductService productService = context.getBean("productService", ProductService.class);
 
         try {
             // 카테고리별 공개된 상품 조회

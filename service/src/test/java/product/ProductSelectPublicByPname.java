@@ -2,16 +2,19 @@ package product;
 
 import edu.sm.dto.Product;
 import edu.sm.service.ProductService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
-public class ProductSelectByPname {
+public class ProductSelectPublicByPname {
     public static void main(String[] args) {
-        ProductService productService = new ProductService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        ProductService productService = context.getBean("productService", ProductService.class);
 
         try {
             String searchName = "DI"; // 조회할 상품명 (부분 일치)
-            List<Product> products = productService.getByName(searchName);
+            List<Product> products = productService.getPublicByName(searchName);
 
             // 상품명으로 조회된 결과 출력
             if (products.isEmpty()) {

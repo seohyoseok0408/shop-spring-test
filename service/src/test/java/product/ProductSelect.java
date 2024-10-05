@@ -1,13 +1,17 @@
 package product;
 
 import edu.sm.dto.Product;
+import edu.sm.service.PayService;
 import edu.sm.service.ProductService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ProductSelect {
     public static void main(String[] args) {
-        try {
-            ProductService productService = new ProductService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        ProductService productService = context.getBean("productService", ProductService.class);
 
+        try {
             // 상품 ID 조회
             int pid = 16;
             Product product = productService.get(pid);

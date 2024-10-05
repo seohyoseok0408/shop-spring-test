@@ -2,13 +2,15 @@ package product;
 
 import edu.sm.dto.Product;
 import edu.sm.service.ProductService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
 public class ProductSelectAllPublic {
     public static void main(String[] args) {
-        // ProductService 인스턴스 생성
-        ProductService productService = new ProductService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        ProductService productService = context.getBean("productService", ProductService.class);
 
         try {
             // 공개된(is_public = true) 상품들만 가져오기

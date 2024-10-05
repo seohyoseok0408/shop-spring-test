@@ -52,4 +52,10 @@
         <property name="dao" ref="payDao"/>
         <property name="cp" ref="connectionPool"/>
     </bean>
+
+    <bean id="productDao" class="edu.sm.dao.ProductDao"/>
+    <bean id="productService" class="edu.sm.service.ProductService">
+        <property name="dao" ref="productDao"/>
+        <property name="cp" ref="connectionPool"/>
+    </bean>
 </beans>
