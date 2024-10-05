@@ -2,12 +2,15 @@ package cart;
 
 import edu.sm.dto.Cart;
 import edu.sm.service.CartService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
 public class CartSelectByCid {
     public static void main(String[] args) {
-        CartService cartService = new CartService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        CartService cartService = context.getBean("cartService", CartService.class);
 
         try {
             int cid = 1; // 고객 ID

@@ -11,4 +11,10 @@
         <property name="cp" ref="connectionPool"/>
     </bean>
 
+    <bean id="cartDao" class="edu.sm.dao.CartDao"/>
+    <bean id="cartService" class="edu.sm.service.CartService">
+        <property name="dao" ref="cartDao"/>
+        <property name="cp" ref="connectionPool"/>
+    </bean>
+
 </beans>

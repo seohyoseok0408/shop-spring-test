@@ -1,11 +1,13 @@
 package cart;
 
 import edu.sm.service.CartService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class CartDeleteByCidPid {
     public static void main(String[] args) {
-        CartService cartService = new CartService();
-
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        CartService cartService = context.getBean("cartService", CartService.class);
         try {
             int cid = 3; // 고객 ID
             int pid = 7; // 상품 ID

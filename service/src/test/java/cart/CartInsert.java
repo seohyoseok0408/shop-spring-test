@@ -1,13 +1,17 @@
 package cart;
 
 import edu.sm.dto.Cart;
+import edu.sm.service.AddressService;
 import edu.sm.service.CartService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class CartInsert {
     public static void main(String[] args) {
-        CartService cartService = new CartService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        CartService cartService = context.getBean("cartService", CartService.class);
 
-        Cart cart = new Cart(0, 1, 6, 2, 0); // cartKey = 0, cid = 1, pid = 1, cnt = 2, price = 10000
+        Cart cart = new Cart(0, 1, 2, 2, 0); // cartKey = 0, cid = 1, pid = 1, cnt = 2, price = 10000
 
         try {
             cartService.add(cart);

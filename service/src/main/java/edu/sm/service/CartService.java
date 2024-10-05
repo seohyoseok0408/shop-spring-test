@@ -13,13 +13,12 @@ public class CartService implements MService<Integer, Cart> {
     CartDao dao;
     ConnectionPool cp;
 
-    public CartService() {
-        dao = new CartDao();
-        try {
-            cp = ConnectionPool.create();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void setDao(CartDao dao) {
+        this.dao = dao;
+    }
+
+    public void setCp(ConnectionPool cp) {
+        this.cp = cp;
     }
 
     @Override

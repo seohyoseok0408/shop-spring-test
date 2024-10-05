@@ -2,10 +2,14 @@ package cart;
 
 import edu.sm.dto.Cart;
 import edu.sm.service.CartService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class CartUpdateCnt {
     public static void main(String[] args) {
-        CartService cartService = new CartService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        CartService cartService = context.getBean("cartService", CartService.class);
+
         int cartId = 1;  // 실제로 수정할 장바구니 항목 ID로 수정
 
         try {

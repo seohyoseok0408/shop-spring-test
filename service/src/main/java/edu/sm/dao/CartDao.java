@@ -85,12 +85,12 @@ public class CartDao implements Dao<Integer, Cart> {
 
     @Override
     public Cart select(Integer cartId, Connection conn) throws Exception {
-        throw new UnsupportedOperationException("지원되지 않는 기능");
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
     }
 
     @Override
     public List<Cart> select(Connection conn) throws Exception {
-        throw new UnsupportedOperationException("지원되지 않는 기능");
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
     }
 
     public List<Cart> selectByCid(Integer cid, Connection conn) throws Exception {
