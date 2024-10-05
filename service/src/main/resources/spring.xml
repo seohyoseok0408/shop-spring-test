@@ -58,4 +58,10 @@
         <property name="dao" ref="productDao"/>
         <property name="cp" ref="connectionPool"/>
     </bean>
+
+    <bean id="reviewDao" class="edu.sm.dao.ReviewDao"/>
+    <bean id="reviewService" class="edu.sm.service.ReviewService">
+        <property name="dao" ref="reviewDao"/>
+        <property name="cp" ref="connectionPool"/>
+    </bean>
 </beans>

@@ -13,13 +13,12 @@ public class ReviewService implements MService<Integer, Review> {
     ReviewDao dao;
     ConnectionPool cp;
 
-    public ReviewService() {
-        dao = new ReviewDao();
-        try {
-            cp = ConnectionPool.create();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void setDao(ReviewDao dao) {
+        this.dao = dao;
+    }
+
+    public void setCp(ConnectionPool cp) {
+        this.cp = cp;
     }
 
     @Override
@@ -90,16 +89,7 @@ public class ReviewService implements MService<Integer, Review> {
 
     @Override
     public List<Review> get() throws Exception {
-        Connection conn = cp.getConnection();
-        List<Review> reviews = null;
-        try {
-            reviews = dao.select(conn);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return reviews;
+        throw new UnsupportedOperationException("Service에서 지원하지 않는 기능입니다.");
     }
 
     // 상품 ID로 모든 리뷰 조회

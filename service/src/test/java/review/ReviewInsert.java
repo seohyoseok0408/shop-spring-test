@@ -2,10 +2,13 @@ package review;
 
 import edu.sm.dto.Review;
 import edu.sm.service.ReviewService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ReviewInsert {
     public static void main(String[] args) {
-        ReviewService reviewService = new ReviewService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        ReviewService reviewService = context.getBean("reviewService", ReviewService.class);
 
         // 리뷰 추가 테스트
         Review review = Review.builder()

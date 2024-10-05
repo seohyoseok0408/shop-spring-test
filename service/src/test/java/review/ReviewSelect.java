@@ -2,10 +2,14 @@ package review;
 
 import edu.sm.dto.Review;
 import edu.sm.service.ReviewService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ReviewSelect {
     public static void main(String[] args) {
-        ReviewService reviewService = new ReviewService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        ReviewService reviewService = context.getBean("reviewService", ReviewService.class);
+
         int rid = 5;  // 조회할 리뷰 ID
         //
         try {

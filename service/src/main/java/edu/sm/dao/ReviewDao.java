@@ -89,12 +89,37 @@ public class ReviewDao implements Dao<Integer, Review> {
 
     @Override
     public Review select(Integer rid, Connection conn) throws Exception {
-        return null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Review review = null;
+        try {
+            ps = conn.prepareStatement(Sql.SELECT_ONE_REVIEW);
+            ps.setInt(1, rid);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                review = new Review(
+                        rs.getInt("rid"),
+                        rs.getInt("pid"),
+                        rs.getInt("cid"),
+                        rs.getInt("rate"),
+                        rs.getString("title"),
+                        rs.getString("content"),
+                        rs.getString("img"),
+                        rs.getTimestamp("rdate")
+                );
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (ps != null) ps.close();
+            if (rs != null) rs.close();
+        }
+        return review;
     }
 
     @Override
     public List<Review> select(Connection conn) throws Exception {
-       return null;
+        throw new UnsupportedOperationException("Service에서 지원하지 않는 기능입니다.");
     }
 
     // 상품 ID로 모든 리뷰 조회
@@ -127,7 +152,6 @@ public class ReviewDao implements Dao<Integer, Review> {
             if (ps != null) ps.close();
             if (rs != null) rs.close();
         }
-
         return reviews;
     }
 }

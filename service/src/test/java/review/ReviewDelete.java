@@ -1,10 +1,15 @@
 package review;
 
+import edu.sm.service.ProductService;
 import edu.sm.service.ReviewService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ReviewDelete {
     public static void main(String[] args) {
-        ReviewService reviewService = new ReviewService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        ReviewService reviewService = context.getBean("reviewService", ReviewService.class);
+
         int rid = 4;  // 삭제할 리뷰 ID
 
         try {
