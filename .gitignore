@@ -1,0 +1,17 @@
+# IntelliJ IDEA 관련 파일
+.idea/
+*.iml
+
+# Maven 빌드 출력 디렉토리 무시
+**/target/
+
+# 기타 OS 관련 파일
+.DS_Store
+Thumbs.db
+
+# Git 관련 파일
+.git/
+
+# 환경 파일
+*.env
+*.properties

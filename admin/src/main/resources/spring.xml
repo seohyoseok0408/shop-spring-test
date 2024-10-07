@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <!-- Connection Pool Bean -->
+    <bean id="connectionPool" class="edu.sm.frame.ConnectionPool" factory-method="create"/>
+
+    <!-- Product 관련 설정 -->
+    <bean id="productDao" class="edu.sm.dao.ProductDao"/>
+    <bean id="productService" class="edu.sm.service.ProductService">
+        <property name="dao" ref="productDao"/>
+        <property name="cp" ref="connectionPool"/>
+    </bean>
+
+    <!-- Order 관련 설정 -->
+    <bean id="orderDao" class="edu.sm.dao.OrderDao"/>
+    <bean id="orderService" class="edu.sm.service.OrderService">
+        <property name="dao" ref="orderDao"/>
+        <property name="cp" ref="connectionPool"/>
+    </bean>
+
+    <!-- Order Detail 관련 설정 -->
+    <bean id="orderDetailDao" class="edu.sm.dao.OrderDetailDao"/>
+    <bean id="orderDetailService" class="edu.sm.service.OrderDetailService">
+        <property name="dao" ref="orderDetailDao"/>
+        <property name="cp" ref="connectionPool"/>
+    </bean>
+
+    <!-- Customer 관련 설정 -->
+    <bean id="customerDao" class="edu.sm.dao.CustomerDao"/>
+    <bean id="customerService" class="edu.sm.service.CustomerService">
+        <property name="dao" ref="customerDao"/>
+        <property name="cp" ref="connectionPool"/>
+    </bean>
+
+    <!-- Access Log 관련 설정 -->
+    <bean id="accessLogDao" class="edu.sm.dao.AccessLogDao"/>
+    <bean id="accessLogService" class="edu.sm.service.AccessLogService">
+        <property name="dao" ref="accessLogDao"/>
+        <property name="cp" ref="connectionPool"/>
+    </bean>
+
+    <!-- Review 관련 설정 -->
+    <bean id="reviewDao" class="edu.sm.dao.ReviewDao"/>
+    <bean id="reviewService" class="edu.sm.service.ReviewService">
+        <property name="dao" ref="reviewDao"/>
+        <property name="cp" ref="connectionPool"/>
+    </bean>
+
+</beans>
