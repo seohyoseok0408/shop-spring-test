@@ -6,10 +6,10 @@ import edu.sm.frame.ConnectionPool;
 import edu.sm.frame.MService;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 public class ReviewService implements MService<Integer, Review> {
+
     private ReviewDao dao;
     private ConnectionPool cp;
 
@@ -41,11 +41,8 @@ public class ReviewService implements MService<Integer, Review> {
     public Review modify(Review review) throws Exception {
         Connection conn = cp.getConnection();
         try {
-            conn.setAutoCommit(false);
             dao.update(review, conn);
-            conn.commit();
         } catch (Exception e) {
-            conn.rollback();
             throw e;
         } finally {
             cp.releaseConnection(conn);
@@ -56,13 +53,10 @@ public class ReviewService implements MService<Integer, Review> {
     @Override
     public Boolean remove(Integer rid) throws Exception {
         Connection conn = cp.getConnection();
-        boolean result;
+        boolean result = false;
         try {
-            conn.setAutoCommit(false);
             result = dao.delete(rid, conn);
-            conn.commit();
         } catch (Exception e) {
-            conn.rollback();
             throw e;
         } finally {
             cp.releaseConnection(conn);
@@ -73,7 +67,7 @@ public class ReviewService implements MService<Integer, Review> {
     @Override
     public Review get(Integer rid) throws Exception {
         Connection conn = cp.getConnection();
-        Review review;
+        Review review = null;
         try {
             review = dao.select(rid, conn);
         } catch (Exception e) {
@@ -87,7 +81,7 @@ public class ReviewService implements MService<Integer, Review> {
     @Override
     public List<Review> get() throws Exception {
         Connection conn = cp.getConnection();
-        List<Review> reviews;
+        List<Review> reviews = null;
         try {
             reviews = dao.select(conn);
         } catch (Exception e) {
@@ -98,9 +92,10 @@ public class ReviewService implements MService<Integer, Review> {
         return reviews;
     }
 
-    public List<Review> getByProductId(int pid) throws Exception {
+    // 상품 ID로 리뷰 조회
+    public List<Review> getReviewsByProductId(int pid) throws Exception {
         Connection conn = cp.getConnection();
-        List<Review> reviews;
+        List<Review> reviews = null;
         try {
             reviews = dao.selectByProductId(pid, conn);
         } catch (Exception e) {

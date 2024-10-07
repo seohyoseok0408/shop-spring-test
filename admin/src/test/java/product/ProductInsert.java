@@ -7,13 +7,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ProductInsert {
     public static void main(String[] args) {
+        // Spring 컨텍스트 로드
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+
+        // ProductService 빈을 가져옴
+        ProductService productService = (ProductService) context.getBean("productService");
+
         try {
-            // Spring 컨텍스트 로드
-            ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
-
-            // ProductService 빈을 가져옴
-            ProductService productService = (ProductService) context.getBean("productService");
-
             // 새로운 상품 생성
             Product product = Product.builder()
                     .categoryId(15)
@@ -35,34 +35,20 @@ public class ProductInsert {
             if (insertedProduct != null) {
                 System.out.println("=====================================");
                 System.out.println("          [ 상품 추가 성공 ]           ");
-                System.out.println("-------------------------------------");
                 System.out.println("  상품 ID       : " + insertedProduct.getPid());
-                System.out.println("  카테고리 ID   : " + insertedProduct.getCategoryId());
-                System.out.println("  할인 ID       : " + insertedProduct.getDisId());
                 System.out.println("  상품명        : " + insertedProduct.getPname());
-                System.out.println("  가격          : " + insertedProduct.getPrice() + "원");
-                System.out.println("  수량          : " + insertedProduct.getCnt());
-                System.out.println("  이미지1       : " + insertedProduct.getImg1());
-                System.out.println("  이미지2       : " + insertedProduct.getImg2());
-                System.out.println("  이미지3       : " + insertedProduct.getImg3());
-                System.out.println("  이미지4       : " + insertedProduct.getImg4());
-                System.out.println("  상세 설명     : " + insertedProduct.getContent());
-                System.out.println("  공개 여부     : " + (insertedProduct.isPublic() ? "공개" : "비공개"));
-                System.out.println("-------------------------------------");
-                System.out.println("상품이 성공적으로 추가되었습니다.");
                 System.out.println("=====================================");
             } else {
-                System.out.println("=====================================");
-                System.out.println("          [ 상품 추가 실패 ]           ");
-                System.out.println("=====================================");
+                System.out.println("상품 추가 실패");
             }
         } catch (Exception e) {
             System.out.println("=====================================");
             System.out.println("       [ 상품 추가 중 오류 발생 ]       ");
-            System.out.println("-------------------------------------");
             System.out.println("에러 메시지: " + e.getMessage());
             System.out.println("=====================================");
             e.printStackTrace();
+        } finally {
+            ((ClassPathXmlApplicationContext) context).close();
         }
     }
 }

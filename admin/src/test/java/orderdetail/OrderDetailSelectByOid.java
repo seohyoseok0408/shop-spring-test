@@ -5,6 +5,7 @@ import edu.sm.service.OrderDetailService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDetailSelectByOid {
@@ -13,12 +14,17 @@ public class OrderDetailSelectByOid {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
 
         // orderDetailService Bean을 가져옴
-        OrderDetailService orderDetailService = (OrderDetailService) context.getBean("orderDetailService");
+        OrderDetailService orderDetailService = context.getBean("orderDetailService", OrderDetailService.class);
 
-        int oid = 10;  // 조회할 주문 ID
+        int oid = 15;  // 조회할 주문 ID
 
         try {
             List<OrderDetail> orderDetails = orderDetailService.getByOid(oid);
+
+            // orderDetails가 null일 경우 빈 리스트로 처리
+            if (orderDetails == null) {
+                orderDetails = new ArrayList<>();
+            }
 
             if (orderDetails.isEmpty()) {
                 System.out.println("=====================================");
@@ -47,6 +53,8 @@ public class OrderDetailSelectByOid {
             System.out.println("에러 메시지: " + e.getMessage());
             System.out.println("=====================================");
             e.printStackTrace();
+        } finally {
+            ((ClassPathXmlApplicationContext) context).close();
         }
     }
 }

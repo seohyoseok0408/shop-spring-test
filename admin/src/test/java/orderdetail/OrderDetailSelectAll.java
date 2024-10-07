@@ -13,7 +13,7 @@ public class OrderDetailSelectAll {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
 
         // orderDetailService Bean을 가져옴
-        OrderDetailService orderDetailService = (OrderDetailService) context.getBean("orderDetailService");
+        OrderDetailService orderDetailService = context.getBean("orderDetailService", OrderDetailService.class);
 
         try {
             List<OrderDetail> orderDetails = orderDetailService.get();
@@ -45,6 +45,8 @@ public class OrderDetailSelectAll {
             System.out.println("에러 메시지: " + e.getMessage());
             System.out.println("=====================================");
             e.printStackTrace();
+        } finally {
+            ((ClassPathXmlApplicationContext) context).close(); // 스프링 컨텍스트 종료
         }
     }
 }

@@ -10,10 +10,9 @@ import java.util.List;
 
 public class OrderDetailService implements MService<Integer, OrderDetail> {
 
-    private OrderDetailDao dao;  // OrderDetailDao 주입받기
-    private ConnectionPool cp;  // ConnectionPool 주입받기
+    private OrderDetailDao dao;
+    private ConnectionPool cp;
 
-    // Spring에서 주입받기 위한 setter 메서드 추가
     public void setDao(OrderDetailDao dao) {
         this.dao = dao;
     }
@@ -40,26 +39,17 @@ public class OrderDetailService implements MService<Integer, OrderDetail> {
 
     @Override
     public OrderDetail modify(OrderDetail orderDetail) throws Exception {
-        throw new UnsupportedOperationException("Order details cannot be modified.");
+        throw new UnsupportedOperationException("Order details cannot be updated.");
     }
 
     @Override
     public Boolean remove(Integer orderDetailId) throws Exception {
-        throw new UnsupportedOperationException("Order details cannot be removed.");
+        throw new UnsupportedOperationException("Order details cannot be deleted.");
     }
 
     @Override
-    public OrderDetail get(Integer orderDetailId) throws Exception {
-        Connection conn = cp.getConnection();
-        OrderDetail orderDetail = null;
-        try {
-            orderDetail = dao.select(orderDetailId, conn);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return orderDetail;
+    public OrderDetail get(Integer id) throws Exception {
+        throw new UnsupportedOperationException("Order details cannot be retrieved by id.");
     }
 
     @Override
@@ -76,7 +66,7 @@ public class OrderDetailService implements MService<Integer, OrderDetail> {
         return orderDetails;
     }
 
-    // 주문 번호로 OrderDetail 목록을 조회하는 메서드 추가
+    // 특정 주문 ID로 주문 상세 내역 조회
     public List<OrderDetail> getByOid(int oid) throws Exception {
         Connection conn = cp.getConnection();
         List<OrderDetail> orderDetails = null;

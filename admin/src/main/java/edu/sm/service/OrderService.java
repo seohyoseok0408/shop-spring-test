@@ -11,10 +11,9 @@ import java.util.Map;
 
 public class OrderService implements MService<Integer, Order> {
 
-    private OrderDao dao;  // OrderDao 주입받기
-    private ConnectionPool cp;  // ConnectionPool 주입받기
+    private OrderDao dao;
+    private ConnectionPool cp;
 
-    // Spring에서 주입받기 위한 setter 메서드 추가
     public void setDao(OrderDao dao) {
         this.dao = dao;
     }
@@ -25,31 +24,12 @@ public class OrderService implements MService<Integer, Order> {
 
     @Override
     public Order add(Order order) throws Exception {
-        Connection conn = cp.getConnection();
-        try {
-            conn.setAutoCommit(false);
-            dao.insert(order, conn);
-            conn.commit();
-        } catch (Exception e) {
-            conn.rollback();
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return order;
+        throw new UnsupportedOperationException("주문은 직접 추가되지 않습니다.");
     }
 
     @Override
     public Order modify(Order order) throws Exception {
-        Connection conn = cp.getConnection();
-        try {
-            dao.update(order, conn);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return order;
+        throw new UnsupportedOperationException("주문 수정은 지원되지 않습니다.");
     }
 
     @Override
@@ -85,26 +65,12 @@ public class OrderService implements MService<Integer, Order> {
         return orders;
     }
 
-    // 고객 ID로 주문 목록 조회 메서드 추가
+    // 특정 회원의 주문 목록 조회
     public List<Order> getByCustomerId(int cid) throws Exception {
         Connection conn = cp.getConnection();
         List<Order> orders = null;
         try {
             orders = dao.selectByCid(cid, conn);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return orders;
-    }
-
-    // 주문 상태별 조회
-    public List<Order> getOrdersByStatus(String status) throws Exception {
-        Connection conn = cp.getConnection();
-        List<Order> orders = null;
-        try {
-            orders = dao.selectOrdersByStatus(status, conn);
         } catch (Exception e) {
             throw e;
         } finally {
@@ -123,6 +89,20 @@ public class OrderService implements MService<Integer, Order> {
         } finally {
             cp.releaseConnection(conn);
         }
+    }
+
+    // 주문 상태별 조회
+    public List<Order> getOrdersByStatus(String status) throws Exception {
+        Connection conn = cp.getConnection();
+        List<Order> orders = null;
+        try {
+            orders = dao.selectOrdersByStatus(status, conn);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            cp.releaseConnection(conn);
+        }
+        return orders;
     }
 
     // 일별 주문 통계 조회

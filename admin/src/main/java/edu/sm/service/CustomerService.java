@@ -10,10 +10,9 @@ import java.util.List;
 
 public class CustomerService implements MService<Integer, Customer> {
 
-    private CustomerDao dao;  // 의존성 주입을 받도록 수정
-    private ConnectionPool cp;  // 의존성 주입을 받도록 수정
+    private CustomerDao dao;
+    private ConnectionPool cp;
 
-    // Spring을 통해 주입받기 위한 setter 메서드 추가
     public void setDao(CustomerDao dao) {
         this.dao = dao;
     }
@@ -93,26 +92,12 @@ public class CustomerService implements MService<Integer, Customer> {
         return customers;
     }
 
-    // 로그인 메서드
-    public Customer login(String email, String pwd) throws Exception {
-        Connection conn = cp.getConnection();
-        Customer customer = null;
-        try {
-            customer = dao.login(email, pwd, conn);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            cp.releaseConnection(conn);
-        }
-        return customer;
-    }
-
-    // 이름으로 고객 검색 메서드
+    // 이름으로 고객 검색 메서드 추가
     public List<Customer> getByName(String cname) throws Exception {
         Connection conn = cp.getConnection();
         List<Customer> customers = null;
         try {
-            customers = dao.getByName(cname, conn);
+            customers = dao.selectByName(cname, conn);
         } catch (Exception e) {
             throw e;
         } finally {

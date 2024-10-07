@@ -9,10 +9,10 @@ import java.sql.Connection;
 import java.util.List;
 
 public class ProductService implements MService<Integer, Product> {
-    private ProductDao dao;  // 의존성 주입을 받도록 수정
-    private ConnectionPool cp;  // 의존성 주입을 받도록 수정
 
-    // Spring을 통해 주입받기 위한 setter 메서드 추가
+    private ProductDao dao;
+    private ConnectionPool cp;
+
     public void setDao(ProductDao dao) {
         this.dao = dao;
     }
@@ -52,7 +52,7 @@ public class ProductService implements MService<Integer, Product> {
 
     @Override
     public Boolean remove(Integer pid) throws Exception {
-        throw new UnsupportedOperationException("상품 삭제 불가능");
+        throw new UnsupportedOperationException("상품은 삭제할 수 없습니다.");
     }
 
     @Override
@@ -83,10 +83,10 @@ public class ProductService implements MService<Integer, Product> {
         return products;
     }
 
-    // 카테고리별로 상품을 조회하는 메서드
-    public List<Product> getProductsByCategory(int categoryId) throws Exception {
+    // 카테고리로 상품 조회
+    public List<Product> getByCategory(int categoryId) throws Exception {
         Connection conn = cp.getConnection();
-        List<Product> products;
+        List<Product> products = null;
         try {
             products = dao.selectByCategory(categoryId, conn);
         } catch (Exception e) {
@@ -97,7 +97,8 @@ public class ProductService implements MService<Integer, Product> {
         return products;
     }
 
-    public List<Product> getProductsSortedBy(String sortBy, Integer categoryId) throws Exception {
+    // 특정 조건에 따른 정렬된 상품 목록 조회
+    public List<Product> getSortedBy(String sortBy, Integer categoryId) throws Exception {
         Connection conn = cp.getConnection();
         List<Product> products = null;
         try {

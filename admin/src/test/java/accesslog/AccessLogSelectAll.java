@@ -2,6 +2,7 @@ package accesslog;
 
 import edu.sm.dto.AccessLog;
 import edu.sm.service.AccessLogService;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.time.LocalDateTime;
@@ -11,8 +12,8 @@ import java.util.List;
 public class AccessLogSelectAll {
     public static void main(String[] args) {
         // Spring 설정 파일을 로드하여 서비스 객체를 가져옴
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
-        AccessLogService accessLogService = (AccessLogService) context.getBean("accessLogService");
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        AccessLogService accessLogService = context.getBean("accessLogService", AccessLogService.class);
 
         try {
             List<AccessLog> accessLogs = accessLogService.get(); // 수정된 메서드명 사용
@@ -46,7 +47,7 @@ public class AccessLogSelectAll {
             System.out.println("=====================================");
             e.printStackTrace();
         } finally {
-            context.close();
+            ((ClassPathXmlApplicationContext) context).close();
         }
     }
 }

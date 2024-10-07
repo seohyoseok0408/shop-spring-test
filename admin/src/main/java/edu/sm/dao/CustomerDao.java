@@ -2,6 +2,7 @@ package edu.sm.dao;
 
 import edu.sm.dto.Customer;
 import edu.sm.frame.Dao;
+import edu.sm.frame.Sql;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,145 +12,156 @@ import java.util.List;
 
 public class CustomerDao implements Dao<Integer, Customer> {
 
-    private static final String INSERT_CUSTOMER = "INSERT INTO customer (cid, pwd, cname, email, phone, birth_date, nick_name, grade, join_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String UPDATE_CUSTOMER = "UPDATE customer SET pwd = ?, cname = ?, email = ?, phone = ?, birth_date = ?, nick_name = ?, grade = ? WHERE cid = ?";
-    private static final String DELETE_CUSTOMER = "DELETE FROM customer WHERE cid = ?";
-    private static final String SELECT_CUSTOMER = "SELECT * FROM customer WHERE cid = ?";
-    private static final String SELECT_ALL_CUSTOMERS = "SELECT * FROM customer";
-    private static final String LOGIN_CUSTOMER = "SELECT * FROM customer WHERE email = ? AND pwd = ?";
-    private static final String SELECT_BY_NAME = "SELECT * FROM customer WHERE cname LIKE ?";
-
     @Override
     public Customer insert(Customer customer, Connection conn) throws Exception {
-        try (PreparedStatement ps = conn.prepareStatement(INSERT_CUSTOMER)) {
-            ps.setInt(1, customer.getCid());
-            ps.setString(2, customer.getPwd());
-            ps.setString(3, customer.getCname());
-            ps.setString(4, customer.getEmail());
-            ps.setString(5, customer.getPhone());
-            ps.setDate(6, customer.getBirth_date());
-            ps.setString(7, customer.getNick_name());
-            ps.setInt(8, customer.getGrade());
-            ps.setTimestamp(9, customer.getJoin_date());
-            ps.executeUpdate();
-            return customer;
-        }
+        return null;
     }
 
     @Override
     public Customer update(Customer customer, Connection conn) throws Exception {
-        try (PreparedStatement ps = conn.prepareStatement(UPDATE_CUSTOMER)) {
-            ps.setString(1, customer.getPwd());
-            ps.setString(2, customer.getCname());
-            ps.setString(3, customer.getEmail());
-            ps.setString(4, customer.getPhone());
-            ps.setDate(5, customer.getBirth_date());
-            ps.setString(6, customer.getNick_name());
-            ps.setInt(7, customer.getGrade());
-            ps.setInt(8, customer.getCid());
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(Sql.UPDATE_CUSTOMER);
+            ps.setString(1, customer.getCname());
+            ps.setString(2, customer.getEmail());
+            ps.setString(3, customer.getPhone());
+            ps.setString(4, customer.getNick_name());
+            ps.setInt(5, customer.getCid());
             ps.executeUpdate();
-            return customer;
-        }
-    }
-
-    @Override
-    public boolean delete(Integer cid, Connection conn) throws Exception {
-        try (PreparedStatement ps = conn.prepareStatement(DELETE_CUSTOMER)) {
-            ps.setInt(1, cid);
-            return ps.executeUpdate() > 0;
-        }
-    }
-
-    @Override
-    public Customer select(Integer cid, Connection conn) throws Exception {
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_CUSTOMER)) {
-            ps.setInt(1, cid);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return new Customer(
-                            rs.getInt("cid"),
-                            rs.getString("pwd"),
-                            rs.getString("cname"),
-                            rs.getString("email"),
-                            rs.getString("phone"),
-                            rs.getDate("birth_date"),
-                            rs.getString("nick_name"),
-                            rs.getInt("grade"),
-                            rs.getTimestamp("join_date")
-                    );
-                }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (ps != null) {
+                ps.close();
             }
         }
+        return customer;
+    }
+
+    @Override
+    public boolean delete(Integer i, Connection conn) throws Exception {
+        boolean flag = false;
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(Sql.DELETE_CUSTOMER);
+            ps.setInt(1, i);
+            int result = ps.executeUpdate();
+            if (result == 1) {
+                flag = true;
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
+        return flag;
+    }
+
+    @Override
+    public Customer select(Integer i, Connection conn) throws Exception {
         return null;
     }
 
     @Override
-    public List<Customer> select(Connection conn) throws Exception {
+    public List<Customer> select(Connection con) throws Exception {
         List<Customer> customers = new ArrayList<>();
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_ALL_CUSTOMERS);
-             ResultSet rs = ps.executeQuery()) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement(Sql.SELECT_CUSTOMER_ALL);
+            rs = ps.executeQuery();
             while (rs.next()) {
-                customers.add(new Customer(
-                        rs.getInt("cid"),
-                        rs.getString("pwd"),
-                        rs.getString("cname"),
-                        rs.getString("email"),
-                        rs.getString("phone"),
-                        rs.getDate("birth_date"),
-                        rs.getString("nick_name"),
-                        rs.getInt("grade"),
-                        rs.getTimestamp("join_date")
-                ));
+                Customer customer = new Customer();
+                customer.setCid(rs.getInt("cid"));
+                customer.setEmail(rs.getString("email"));
+                customer.setCname(rs.getString("cname"));
+                customer.setPhone(rs.getString("phone"));
+                customer.setBirth_date(rs.getDate("birth_date"));
+                customer.setNick_name(rs.getString("nick_name"));
+                customer.setGrade(rs.getInt("grade"));
+                customer.setJoin_date(rs.getTimestamp("join_date"));
+                customers.add(customer);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (rs != null) {
+                rs.close();
             }
         }
-        return customers;
+        return customers;  // 리스트 반환
     }
 
-    // 로그인 기능 구현
-    public Customer login(String email, String pwd, Connection conn) throws Exception {
-        try (PreparedStatement ps = conn.prepareStatement(LOGIN_CUSTOMER)) {
-            ps.setString(1, email);
-            ps.setString(2, pwd);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return new Customer(
-                            rs.getInt("cid"),
-                            rs.getString("pwd"),
-                            rs.getString("cname"),
-                            rs.getString("email"),
-                            rs.getString("phone"),
-                            rs.getDate("birth_date"),
-                            rs.getString("nick_name"),
-                            rs.getInt("grade"),
-                            rs.getTimestamp("join_date")
-                    );
-                }
-            }
-        }
-        return null;
-    }
 
-    // 이름으로 고객 검색 기능 구현
-    public List<Customer> getByName(String cname, Connection conn) throws Exception {
+    public List<Customer> selectByName(String name, Connection conn) throws Exception {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         List<Customer> customers = new ArrayList<>();
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_NAME)) {
-            ps.setString(1, "%" + cname + "%");
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    customers.add(new Customer(
-                            rs.getInt("cid"),
-                            rs.getString("pwd"),
-                            rs.getString("cname"),
-                            rs.getString("email"),
-                            rs.getString("phone"),
-                            rs.getDate("birth_date"),
-                            rs.getString("nick_name"),
-                            rs.getInt("grade"),
-                            rs.getTimestamp("join_date")
-                    ));
-                }
+        try {
+            ps = conn.prepareStatement(Sql.SELECT_CUSTOMER_BY_NAME); // SQL 쿼리에서 이름으로 찾기
+            ps.setString(1, "%" + name + "%"); // 이름에 대해 부분 매칭
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Customer customer = new Customer();
+                customer.setCid(rs.getInt("cid"));
+                customer.setEmail(rs.getString("email"));
+                customer.setCname(rs.getString("cname"));
+                customer.setPhone(rs.getString("phone"));
+                customer.setBirth_date(rs.getDate("birth_date"));
+                customer.setNick_name(rs.getString("nick_name"));
+                customer.setGrade(rs.getInt("grade"));
+                customer.setJoin_date(rs.getTimestamp("join_date"));
+                customers.add(customer);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (rs != null) {
+                rs.close();
             }
         }
         return customers;
     }
+
+    public Customer selectByEmail(String email, Connection conn) throws Exception {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Customer customer = null;
+        try {
+            ps = conn.prepareStatement(Sql.SELECT_CUSTOMER_EMAIL);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                customer = new Customer();
+                customer.setCid(rs.getInt("cid"));
+                customer.setPwd(rs.getString("pwd"));
+                customer.setCname(rs.getString("cname"));
+                customer.setEmail(rs.getString("email"));
+                customer.setPhone(rs.getString("phone"));
+                customer.setBirth_date(rs.getDate("birth_date"));
+                customer.setNick_name(rs.getString("nick_name"));
+                customer.setGrade(rs.getInt("grade"));
+                customer.setJoin_date(rs.getTimestamp("join_date"));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return customer;
+    }
+
 }
